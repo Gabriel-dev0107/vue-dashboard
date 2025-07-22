@@ -1,8 +1,20 @@
 <template>
-  <anside class="w-64 bg-white h-full shadow p-4">
-    <ul class="space-y-2">
-      <li><router-link to="/" class="text-blue-600 hover:underline">Dashboard</router-link></li>
-      <li><router-link to="/users" class="text-blue-600 hover:underline">Usuarios</router-link></li>
+  <aside class="bg-white w-64 h-full shadow-md p-4">
+    <ul>
+      <li class="mb-4">
+        <router-link to="/" class="text-blue-600 hover:underline" @click="handleLinkClick">Dashboard</router-link>
+      </li>
+      <li>
+        <router-link to="/users" class="text-blue-600 hover:underline" @click="handleLinkClick">Usuários</router-link>
+      </li>
     </ul>
-  </anside>
+  </aside>
 </template>
+
+<script setup>
+const emit = defineEmits(['close'])
+
+function handleLinkClick() {
+  emit('close') // ✅ Fecha sempre, independente do tamanho da tela
+}
+</script>
