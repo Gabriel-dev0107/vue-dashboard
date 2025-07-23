@@ -2,7 +2,7 @@
   <div class="bg-white shadow-md rounded-lg p-4">
     <apexchart
       class="w-full"
-      type="bar"
+      type="pie"
       height="300"
       :options="chartOptions"
       :series="series"
@@ -11,24 +11,15 @@
 </template>
 
 <script setup>
-import ApexCharts from 'vue3-apexcharts'
+import ApexCharts from "vue3-apexcharts"
 
 const chartOptions = {
-  chart: {
-    id: 'basic-bar'
-  },
-  xaxis: {
-    categories: ['Seg', 'Ter', 'Quar', 'Quin', 'Sex']  // Corrigido: "ctegories" → "categories"
-  },
-  colors: ['#3B82F6']
+  labels: ["Cursos", "Projetos", "Pedidos"],
+  colors: ["#3B82F6", "#10B981", "#F59E0B"]
 }
 
-const series = [
-  {
-    name: 'Pedidos',
-    data: [30, 40, 35, 50, 49]
-  }
-]
+const series = [44, 33, 23] // dados fictícios
+
 </script>
 
 <script>
