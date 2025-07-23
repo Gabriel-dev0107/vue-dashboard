@@ -1,12 +1,6 @@
 {
-  
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  
   "name": "vue-dashboard-final",
   "version": "0.0.1",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -26,5 +20,4 @@
     "vite": "^5.4.19"
   }
 }
-
 
