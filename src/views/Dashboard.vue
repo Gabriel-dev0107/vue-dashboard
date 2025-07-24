@@ -22,7 +22,7 @@
 <script setup>
 import StatCard from '../components/StatCard.vue'
 import ChartCard from '../components/ChartCard.vue'
-import PieChartCard from '../components/PieChartCard.vue'
+import PieChartCard from '../components/pieChartCard.vue'
 
 const cards = [
   { title: 'Usuários', value: 124 },
