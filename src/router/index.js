@@ -1,15 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
+
 import Dashboard from '../views/Dashboard.vue'
 import Users from '../views/Users.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from "../views/RegisterView.vue";
 
 const routes = [
-  {
-    path:'/',
-    component: Dashboard,
-    meta: { requiresAuth: true }
-  },
+
+ {
+  path:'/',
+  name:'dashboard',
+  component: Dashboard,
+  meta: { requiresAuth: true } 
+ },
   {
     path: '/users',
     component: Users,
@@ -30,19 +33,16 @@ const router = createRouter({
   routes,
 })
 
-// ✅ Adiciona o guard global
 router.beforeEach((to, from, next) => {
-  const isLogged = localStorage.getItem('logado') === 'true'
+  const publicPages = ['/login','/register']
+  const authRequired = !publicPages.includes(to.path)
+  const isAuthenticated =localStorage.getItem('logadi') ==='true'
 
-  if (!isLogged && to.path !== '/login' && to.path !== '/register') {
-    return next('/login')
+  if(authRequired && !isAuthenticated) {
+    next('/login') 
+  }else {
+    next() 
   }
-
-  if (isLogged && (to.path === '/login' || to.path === '/register')) {
-    return next('/')
-  }
-
-  next()
 })
 
 export default router

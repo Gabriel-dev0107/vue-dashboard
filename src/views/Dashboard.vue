@@ -16,6 +16,8 @@
     <!-- Gráficos -->
     <ChartCard />
     <PieChartCard />
+    <GraficoLinha />
+    <UserTable />
   </div>
 </template>
 
@@ -23,6 +25,8 @@
 import StatCard from '../components/StatCard.vue'
 import ChartCard from '../components/ChartCard.vue'
 import PieChartCard from '../components/pieChartCard.vue'
+import GraficoLinha from '../components/GraficoLinha.vue'
+import UserTable from '../components/UserTable.vue'
 
 const cards = [
   { title: 'Usuários', value: 124 },

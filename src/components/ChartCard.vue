@@ -26,7 +26,7 @@ const chartOptions = {
 const series = [
   {
     name: 'Pedidos',
-    data: [30, 40, 35, 50, 49]
+    data: [20, 30, 10, 20, 9]
   }
 ]
 </script>

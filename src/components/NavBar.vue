@@ -1,6 +1,6 @@
 <template>
   <nav class="bg-white px-4 py-3 shadow flex justify-between items-center">
-      <!-- Botão para controlar a sidebar (sempre visível) -->
+    
     <button @click="$emit('toggle-sidebar')" class="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-100">
       ☰
     </button>

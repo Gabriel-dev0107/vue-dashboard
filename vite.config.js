@@ -1,9 +1,12 @@
-const { defineConfig } = require('vite')
-const vue = require('@vitejs/plugin-vue')
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import path from 'path'
 
-module.exports = defineConfig({
+export default defineConfig({
   plugins: [vue()],
-  build: {
-    outDir: 'dist'
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src') // isso faz o @ apontar para a pasta src
+    }
   }
 })
