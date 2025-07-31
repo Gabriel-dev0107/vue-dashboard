@@ -3,6 +3,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import Navbar from './components/NavBar.vue'
 import Sidebar from './components/SideBar.vue'
+import Footer from './components/Footer.vue'
 
 const route = useRoute()
 const isSidebarOpen = ref(true)
@@ -23,15 +24,15 @@ watch(isSidebarOpen, (val) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen bg-gray-100">
-    <!-- ✅ Navbar só aparece se showLayout for true -->
+  <div class="flex flex-col min-h-screen bg-gray-100">
+    <!-- ✅ Navbar -->
     <Navbar
       v-if="showLayout"
       @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
     />
 
     <div class="flex flex-1">
-      <!-- ✅ Sidebar controlada por showLayout também -->
+      <!-- ✅ Sidebar -->
       <Sidebar
         v-if="showLayout"
         v-show="isSidebarOpen"
@@ -43,7 +44,13 @@ watch(isSidebarOpen, (val) => {
       <!-- Conteúdo principal -->
       <main class="flex-1 p-4 overflow-y-auto">
         <router-view />
+        
+
+        
+        
       </main>
+      
+      
     </div>
   </div>
 </template>

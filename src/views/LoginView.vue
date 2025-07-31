@@ -45,6 +45,7 @@ const handleLogin = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value)
     localStorage.setItem('logadi', 'true') 
+    localStorage.setItem('nomeUsuario', email.value.split('@')[0]) 
     router.push('/' ) 
   } catch (err) {
     if (err.code === 'auth/user-not-found') {
