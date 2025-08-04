@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-md rounded-lg p-4">
+  <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 transition-colors">
     <apexchart
       class="w-full"
       type="pie"
@@ -11,18 +11,21 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import ApexCharts from "vue3-apexcharts"
 
-const chartOptions = {
+const series = [44, 33, 23] // dados fictícios
+
+const chartOptions = ref({
   labels: ["Cursos", "Projetos", "Pedidos"],
   colors: ["#3B82F6", "#10B981", "#F59E0B"],
 
-  title:{
-    text:'Distribuição de Ações',
+  title: {
+    text: 'Distribuição de Ações',
     align: 'center',
-    style:{
+    style: {
       fontSize: '18px',
-      fontWeigth: 'bold'
+      fontWeight: 'bold'
     }
   },
 
@@ -32,13 +35,14 @@ const chartOptions = {
     itemMargin: {
       vertical: 8
     },
-    markers:{
+    markers: {
       width: 12,
       height: 12,
       radius: 12
     }
   },
-    dataLabels: {
+
+  dataLabels: {
     enabled: true,
     style: {
       fontSize: '14px',
@@ -64,11 +68,37 @@ const chartOptions = {
     y: {
       formatter: (val) => `${val}%`
     }
+  },
+
+  theme: {
+    mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  }
+})
+
+// ✅ Atualiza o tema dinâmico (sem recriar chart desnecessariamente)
+const updateTheme = () => {
+  const isDark = document.documentElement.classList.contains('dark')
+  if (chartOptions.value.theme.mode !== (isDark ? 'dark' : 'light')) {
+    chartOptions.value = {
+      ...chartOptions.value,
+      theme: {
+        mode: isDark ? 'dark' : 'light'
+      }
+    }
   }
 }
 
-const series = [44, 33, 23] // dados fictícios
+let observer
 
+onMounted(() => {
+  updateTheme()
+  observer = new MutationObserver(updateTheme)
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+})
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect()
+})
 </script>
 
 <script>

@@ -1,17 +1,17 @@
 <template>
-  <div class="px-4 py-6 space-y-8 max-w-7xl mx-auto">
+  <div class="px-4 py-6 space-y-8 max-w-7xl mx-auto text-gray-800 dark:text-gray-100">
     <!-- Título -->
-    <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+    <h2 class="text-2xl font-bold">Dashboard</h2>
 
     <!-- Saudação personalizada -->
-      <div class="mb-2">
-        <p class="text-lg text-gray-700 font-medium">
-          👋 Bom dia, {{ nomeUsuario }}!
-        </p>
-        <p class="text-sm text-gray-500">
-          📅 {{ dataAtual }} — {{ resumo }}
-        </p>
-      </div>
+    <div class="mb-2">
+      <p class="text-lg font-medium">
+        👋 Bom dia, {{ nomeUsuario }}!
+      </p>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        📅 {{ dataAtual }} — {{ resumo }}
+      </p>
+    </div>
 
     <!-- Filtros -->
     <div class="flex gap-2 mb-2">
@@ -20,10 +20,10 @@
         :key="periodo"
         @click="filtroSelecionado = periodo"
         :class="[
-          'px-4 py-2 rounded',
+          'px-4 py-2 rounded transition',
           filtroSelecionado === periodo
             ? 'bg-blue-600 text-white'
-            : 'bg-gray-200 text-gray-800'
+            : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
         ]"
       >
         {{ periodo }}
@@ -31,36 +31,36 @@
     </div>
 
     <!-- Cards -->
-     <TransitionGroup
-        name="fade"
-        tag="div"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-      >
-        <StatCard
-          v-for="card in cards"
-          :key="card.title"
-          :title="card.title"
-          :value="card.value"
-          :icon="card.icon"
-          :bgClass="card.bgClass"
-          :variation="card.variation"
-        />
-      </TransitionGroup>
-    
+    <TransitionGroup
+      name="fade"
+      tag="div"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+    >
+      <StatCard
+        v-for="card in cards"
+        :key="card.title"
+        :title="card.title"
+        :value="card.value"
+        :icon="card.icon"
+        :bgClass="card.bgClass"
+        :variation="card.variation"
+      />
+    </TransitionGroup>
 
     <!-- Gráficos -->
     <ChartCard />
     <PieChartCard />
-    <GraficoLinha />
     <UserTable />
   </div>
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: all 0.3s ease;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
   transform: translateY(10px);
 }
@@ -71,9 +71,9 @@ import { ref, computed } from 'vue'
 import StatCard from '../components/StatCard.vue'
 import ChartCard from '../components/ChartCard.vue'
 import PieChartCard from '../components/pieChartCard.vue'
-import GraficoLinha from '../components/GraficoLinha.vue'
 import UserTable from '../components/UserTable.vue'
 
+// Usuário e data
 const nomeUsuario = ref(localStorage.getItem('nomeUsuario') || 'Usuário')
 const dataAtual = new Date().toLocaleDateString('pt-BR', {
   weekday: 'long',
@@ -82,7 +82,10 @@ const dataAtual = new Date().toLocaleDateString('pt-BR', {
   day: 'numeric'
 })
 
-// Simulando os dados do resumo
+// Filtro de período
+const filtroSelecionado = ref('Hoje')
+
+// Texto de resumo
 const resumo = computed(() => {
   if (filtroSelecionado.value === 'Hoje') {
     return 'Hoje temos 5 novos usuários e R$ 320 em receitas.'
@@ -96,10 +99,7 @@ const resumo = computed(() => {
 // Ícones
 import { Users, ShoppingCart, DollarSign, AlertTriangle } from 'lucide-vue-next'
 
-// Estado do filtro
-const filtroSelecionado = ref('Hoje')
-
-// Dados dinâmicos dos cards
+// Cards com dados dinâmicos
 const cards = computed(() => {
   if (filtroSelecionado.value === 'Hoje') {
     return [

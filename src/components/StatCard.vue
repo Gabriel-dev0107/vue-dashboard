@@ -1,22 +1,24 @@
 <template>
-  <div
-    class="bg-white rounded-lg shadow p-4 transform transition duration-300 hover:scale-105 hover:shadow-lg"
-  >
+  <div class="p-4 rounded-lg shadow bg-white dark:bg-gray-800 transition-colors">
     <div class="flex items-center justify-between mb-2">
-      <div>
-        <h3 class="text-gray-600 text-sm font-medium">{{ title }}</h3>
-        <p class="text-2xl font-bold">{{ value }}</p>
-      </div>
-      <div :class="['p-2 rounded-full text-white', bgClass]">
-        <component :is="icon" class="w-5 h-5" />
-      </div>
+      <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        {{ title }}
+      </h3>
+      <component :is="icon" class="w-5 h-5 text-white p-1 rounded-full" :class="bgClass" />
     </div>
-    <p class="text-sm text-gray-500">
-      Variação: 
-      <span :class="variation >= 0 ? 'text-green-600' : 'text-red-600'">
-        {{ variation >= 0 ? '+' : '' }}{{ variation }}%
-      </span>
-    </p>
+    <div class="text-2xl font-bold text-gray-900 dark:text-white">
+      {{ value }}
+    </div>
+    <div
+      class="text-sm"
+      :class="{
+        'text-green-600': variation > 0,
+        'text-red-600': variation < 0,
+        'text-gray-500 dark:text-gray-400': variation === 0
+      }"
+    >
+      Variação: {{ variation >= 0 ? '+' : '' }}{{ variation }}%
+    </div>
   </div>
 </template>
 

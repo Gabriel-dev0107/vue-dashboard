@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-md rounded-lg p-4">
+  <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow transition-colors">
     <apexchart
       class="w-full"
       type="bar"
@@ -11,17 +11,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted, watch } from 'vue'
 import ApexCharts from 'vue3-apexcharts'
-
-const chartOptions = {
-  chart: {
-    id: 'basic-bar'
-  },
-  xaxis: {
-    categories: ['Seg', 'Ter', 'Quar', 'Quin', 'Sex']  // Corrigido: "ctegories" → "categories"
-  },
-  colors: ['#3B82F6']
-}
 
 const series = [
   {
@@ -29,6 +20,44 @@ const series = [
     data: [20, 30, 10, 20, 9]
   }
 ]
+
+const chartOptions = ref({
+  chart: {
+    id: 'basic-bar',
+    toolbar: {
+      show: false
+    }
+  },
+  xaxis: {
+    categories: ['Seg', 'Ter', 'Quar', 'Quin', 'Sex']
+  },
+  colors: ['#3B82F6'],
+  theme: {
+    mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  },
+  grid: {
+    borderColor: '#e5e7eb'
+  }
+})
+
+// Observa mudanças no modo escuro
+const updateTheme = () => {
+  chartOptions.value = {
+    ...chartOptions.value,
+    theme: {
+      mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    }
+  }
+}
+
+onMounted(() => {
+  // Atualiza o tema ao montar
+  updateTheme()
+
+  // Observa mudanças manuais na classe do <html>
+  const observer = new MutationObserver(updateTheme)
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+})
 </script>
 
 <script>
